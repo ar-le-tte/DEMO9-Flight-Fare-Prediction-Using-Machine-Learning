@@ -1,0 +1,52 @@
+# ---- Data 
+data/**
+!data/README.md
+!data/.gitkeep
+
+# ---- Models / outputs / reports ----
+models/**
+reports/figures/**
+*.pkl
+*.joblib
+*.onnx
+
+# ---- Python cache / builds ----
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# ---- Virtual envs ----
+.venv/
+venv/
+env/
+.conda/
+
+# ---- Jupyter ----
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# ---- OS / editor ----
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# ---- Logs ----
+*.log
+logs/
+
+# ---- Testing / coverage ----
+.pytest_cache/
+.coverage
+htmlcov/
+
+# ---- Parquet / temp ----
+*.parquet
+*.feather
+*.csv~
