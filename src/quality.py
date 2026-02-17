@@ -56,3 +56,23 @@ def assert_bronze_ok(df: pd.DataFrame, *, dup_fail_ratio: float = 0.33) -> None:
     neg = {k: v for k, v in r["negative_counts"].items() if v > 0}
     if neg:
         raise ValueError(f"Found negative values in numeric columns: {neg}")
+def silver_checks(df: pd.DataFrame) -> dict:
+    issues = {}
+
+    # datetime parse
+    issues["bad_departure_dt"] = int(df["Departure Date & Time"].isna().sum())
+    issues["bad_arrival_dt"] = int(df["Arrival Date & Time"].isna().sum())
+    # Duplicates
+    issues["potential_duplicates"] = int(df["is_potential_duplicate"].sum())
+    issues["max_dup_group_size"] = int(df["dup_group_size"].max())
+
+    # arrival before departure
+    bad_order = (df["Arrival Date & Time"] < df["Departure Date & Time"]).sum()
+    issues["arrival_before_departure"] = int(bad_order)
+
+    # fare mismatch metrics 
+    issues["fare_mismatch_gt_1_bdt"] = int(df["Fare Mismatch Flag"].sum())
+    issues["fare_mismatch_max_abs_diff"] = float(df["Fare Diff (BDT)"].abs().max())
+
+
+    return issues
