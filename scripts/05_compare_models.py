@@ -22,19 +22,20 @@ NUMERIC = ["Days Before Departure", "Duration (hrs)", "dep_month", "dep_dayofwee
 def main() -> None:
     df = pd.read_parquet(DATA_PATH)
     DEV_SAMPLE_N = 20000
+    dev_tag = "full"
     if DEV_SAMPLE_N is not None and len(df) > DEV_SAMPLE_N:
-        df = df.sample(n=DEV_SAMPLE_N, random_state=42).reset_index(drop=True)
+        df = df.sample(n=DEV_SAMPLE_N, random_state=2605).reset_index(drop=True)
         print(f"[DEV MODE] Using sample of {DEV_SAMPLE_N} rows")
 
     X = df[CATEGORICAL + NUMERIC]
     y = df[TARGET]
 
     X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, random_state=42
+        X, y, test_size=0.2, random_state=2605
     )
 
     preprocessor = make_preprocessor(NUMERIC, CATEGORICAL)
-    models = get_models(random_state=42)
+    models = get_models(random_state=2605)
 
     results = []
     for name, estimator in models.items():
@@ -53,10 +54,11 @@ def main() -> None:
     res_df = pd.DataFrame(results).sort_values("rmse", ascending=True)
 
     Path("reports").mkdir(exist_ok=True)
-    res_df.to_csv("reports/model_comparison.csv", index=False)
+    out_csv = f"reports/model_comparison_{dev_tag}.csv"
+    res_df.to_csv(out_csv, index=False) 
 
     print(res_df.to_string(index=False))
-    print("Saved: reports/model_comparison.csv")
+    print(f"Saved: {out_csv}")
     print("Saved: models/*.joblib and reports/*_metrics.json")
 
 
