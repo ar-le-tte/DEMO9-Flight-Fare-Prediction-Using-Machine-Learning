@@ -1,5 +1,6 @@
 from __future__ import annotations
-
+import numpy as np
+from sklearn.compose import TransformedTargetRegressor
 from sklearn.linear_model import LinearRegression, Ridge, Lasso
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.linear_model import ElasticNet
@@ -13,6 +14,11 @@ def get_models(random_state: int = 42) -> dict:
     """
     return {
         "linear_regression": LinearRegression(),
+        "linear_log_target": TransformedTargetRegressor(
+            regressor=LinearRegression(),
+            func=np.log1p,
+            inverse_func=np.expm1
+        ),
 
         # Regularized linear models
         "ridge_a10": Ridge(alpha=10.0, random_state=random_state),
