@@ -8,8 +8,9 @@ from pathlib import Path
 import joblib
 import numpy as np
 import pandas as pd
-from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 from sklearn.model_selection import train_test_split
+from src.models.eval import metrics_for_log_target
+
 
 DATA_PATH = "data/processed/flight_fares_gold.parquet"
 TARGET = "Total Fare (BDT)"
@@ -28,19 +29,16 @@ def main() -> None:
 
     df = pd.read_parquet(DATA_PATH)
     X = df[CATEGORICAL + NUMERIC]
-    y = df[TARGET]
+    y = np.log1p(df[TARGET])
+
 
     # fixed split 
     _, X_test, _, y_test = train_test_split(X, y, test_size=0.2, random_state=2605)
 
     pipe = joblib.load(args.model)
-    preds = pipe.predict(X_test)
+    preds_log = pipe.predict(X_test)
 
-    metrics = {
-        "r2": float(r2_score(y_test, preds)),
-        "mae": float(mean_absolute_error(y_test, preds)),
-        "rmse": float(np.sqrt(mean_squared_error(y_test, preds))),
-    }
+    metrics = metrics_for_log_target(y_test, preds_log)
 
     Path("reports").mkdir(exist_ok=True)
     Path("reports/eval_saved_model.json").write_text(json.dumps(metrics, indent=2), encoding="utf-8")
