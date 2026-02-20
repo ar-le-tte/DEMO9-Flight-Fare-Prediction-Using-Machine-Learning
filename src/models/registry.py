@@ -14,15 +14,10 @@ def get_models(random_state: int = 42) -> dict:
     """
     return {
         "linear_regression": LinearRegression(),
-        "linear_log_target": TransformedTargetRegressor(
-            regressor=LinearRegression(),
-            func=np.log1p,
-            inverse_func=np.expm1
-        ),
 
         # Regularized linear models
         "ridge_a10": Ridge(alpha=10.0, random_state=random_state),
-        # "lasso_a0p01": Lasso(alpha=0.01, random_state=random_state, max_iter=50000),
+        "lasso_a0p01": Lasso(alpha=0.01, random_state=random_state, max_iter=50000),
         "elasticnet": ElasticNet(alpha=0.01, l1_ratio=0.5, max_iter=200000, random_state=random_state),
 
         # Tree-based models

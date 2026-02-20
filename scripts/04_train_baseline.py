@@ -10,6 +10,8 @@ from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
+from src.models.eval import metrics_for_log_target
+
 
 DATA_PATH = "data/processed/flight_fares_gold.parquet"
 TARGET = "Total Fare (BDT)"
@@ -22,10 +24,10 @@ def main() -> None:
     df = pd.read_parquet(DATA_PATH)
 
     X = df[CATEGORICAL + NUMERIC]
-    y = df[TARGET]
+    y = np.log1p(df[TARGET])
 
     X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, random_state=42
+        X, y, test_size=0.2, random_state=2605
     )
 
     numeric_pipe = Pipeline(steps=[
@@ -57,13 +59,15 @@ def main() -> None:
 
     preds = pipe.predict(X_test)
 
-    metrics = { "model": "LinearRegression",
+    m = metrics_for_log_target(y_test, preds)
+
+    metrics = {
+        "model": "LinearRegression (log-target)",
         "rows_train": int(len(X_train)),
         "rows_test": int(len(X_test)),
-        "r2": float(r2_score(y_test, preds)),
-        "mae": float(mean_absolute_error(y_test, preds)),
-        "rmse": float(np.sqrt(mean_squared_error(y_test, preds))),
+        **m
     }
+
 
     Path("reports").mkdir(exist_ok=True)
     Path("models").mkdir(exist_ok=True)
