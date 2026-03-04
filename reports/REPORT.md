@@ -134,10 +134,11 @@ Compared:
 
 ## 6. Model Interpretation & Insights
 ### Feature importance
+![Feature Importance](feature_importance.png)
 **Script:** `scripts/09_permutation_importance.py`  
 **Artifact:** `reports/permutation_importance.csv`
 
-Top drivers typically include booking lead time, duration, airline, route, and class.
+Top drivers  include duration, aircraft type, class, and destination.
 
 ### Stakeholder insights (high level)
 - Fares are strongly influenced by **airline**, **route**, **class**, and **booking lead time**.
