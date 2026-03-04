@@ -1,4 +1,3 @@
-# scripts/07b_eval_saved_model.py
 from __future__ import annotations
 
 import argparse

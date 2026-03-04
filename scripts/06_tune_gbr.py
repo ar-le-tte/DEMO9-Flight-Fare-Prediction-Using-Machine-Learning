@@ -50,7 +50,7 @@ def main() -> None:
         param_distributions=param_dist,
         n_iter=20,
         scoring="neg_root_mean_squared_error",  # RMSE in log-space for CV
-        cv=3,
+        cv=5,
         random_state=2605,
         n_jobs=-1,
         verbose=1,
