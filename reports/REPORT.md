@@ -1,10 +1,20 @@
-# Flight Fare Prediction (Bangladesh) — End-to-End ML Pipeline Report
+# Flight Fare Prediction Using Machine Learning: End-to-End ML Pipeline Report
+Airlines and travel platforms want to estimate ticket prices based on route, airline, and travel date to help with pricing strategy and dynamic recommendations.
 
 ## 0. Project Overview
 **Business goal:** Predict flight ticket prices to support pricing strategy and recommendation systems.  
-**ML framing:** Supervised regression.  
-**Target:** `Total Fare (BDT)`  
-**Main evaluation metrics:** MAE and RMSE in BDT (primary), plus R² on log-target (secondary).
+**ML framing:** Supervised regression.
+
+    - **Inputs (X):** route and trip characteristics such as airline, source, destination, departure date/time (engineered into month/day features), duration, stopovers, class, booking source, seasonality, and days before departure.  
+    - **Target (Y):** `Total Fare (BDT)`  
+**Main evaluation metrics:** 
+We will evaluate models using:
+
+    - **`R²`** (**Coefficient of Determination**): how much variance in fare is explained by the model.
+
+    - **Mean Absolute Error** (**`MAE`**): average absolute prediction error (in BDT).
+
+    - **Root Mean Squared Error** (**`RMSE`**): error magnitude that penalizes large mistakes more (in BDT).
 
 **Dataset:** [Flight Price Dataset of Bangladesh](https://www.kaggle.com/datasets/mahatiratusher/flight-price-dataset-of-bangladesh)
 
