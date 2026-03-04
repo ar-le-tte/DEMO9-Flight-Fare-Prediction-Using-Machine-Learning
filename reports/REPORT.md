@@ -22,7 +22,7 @@ We will evaluate models using:
 
 ---
 
-## 1. Data Understanding (Step 1)
+## 1. Data Understanding 
 ### Key columns
 - **Categorical:** Airline, Source, Destination, Class, Stopovers, Booking Source, Seasonality, Aircraft Type  
 - **Datetime:** Departure Date & Time, Arrival Date & Time  
@@ -34,7 +34,7 @@ We will evaluate models using:
 
 ---
 
-## 2. Data Quality + Preprocessing (Step 2) — DE mindset (Bronze → Silver → Gold)
+## 2. Data Quality + Preprocessing (Bronze → Silver → Gold)
 
 ### Bronze (raw validation)
 **Script:** `scripts/00_profile_raw.py`  
@@ -77,7 +77,7 @@ We will evaluate models using:
 
 ---
 
-## 3. Exploratory Data Analysis (Step 3)
+## 3. Exploratory Data Analysis
 EDA is provided in: `notebooks/02_eda.ipynb` (plots + KPIs).
 
 Key plots:
@@ -90,7 +90,7 @@ Key plots:
 
 ---
 
-## 4. Baseline Model (Step 4)
+## 4. Baseline Model 
 ### Baseline: Linear Regression
 **Script:** `scripts/04_train_baseline.py`  
 **Artifacts:** `models/baseline_linear.joblib`, `reports/metrics_baseline.json`
@@ -106,7 +106,7 @@ Key plots:
 
 ---
 
-## 5. Advanced Modeling & Optimization (Step 5)
+## 5. Advanced Modeling & Optimization
 ### Model comparison (full dataset)
 **Script:** `scripts/05_compare_models.py`  
 **Artifact:** `reports/model_comparison_full.csv`
@@ -132,12 +132,12 @@ Compared:
 
 ---
 
-## 6. Model Interpretation & Insights (Step 6)
+## 6. Model Interpretation & Insights
 ### Feature importance
 **Script:** `scripts/09_permutation_importance.py`  
 **Artifact:** `reports/permutation_importance.csv`
 
-(Top drivers typically include booking lead time, duration, airline, route, and class.)
+Top drivers typically include booking lead time, duration, airline, route, and class.
 
 ### Stakeholder insights (high level)
 - Fares are strongly influenced by **airline**, **route**, **class**, and **booking lead time**.
